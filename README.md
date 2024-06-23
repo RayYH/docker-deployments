@@ -11,7 +11,7 @@ Use the [mkcert](https://github.com/FiloSottile/mkcert) to generate the certific
 $ mkcert -install
 
 # Generate the certificates
-$ mkcert -cert-file certs/local.test/cert.pem -key-file certs/local.test/key.pem local.dev "*.local.dev" local.test localhost 127.0.0.1 ::1
+$ mkcert -cert-file certs/local.test/cert.pem -key-file certs/local.test/key.pem local.test "*.local.test" local.test localhost 127.0.0.1 ::1
 ```
 
 ## Install Dnsmasq
@@ -31,6 +31,15 @@ $ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
 ## Start Services
 
 ```shell
-docker network create nginx
-docker compose -f docker-compose.yml up -d
+$ docker network create nginx
+$ docker compose -f docker-compose.yml up -d
 ```
+
+Visit [https://local.test](https://local.test) to see the Nginx welcome page.
+
+```shell
+docker compose -f services/minio-compose.yml up -d
+docker exec -it nginx nginx -s reload
+```
+
+Visit [https://minio.local.test](https://minio.local.test) to see the Minio welcome page.
