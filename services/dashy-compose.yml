@@ -1,0 +1,12 @@
+services:
+  dashy:
+    image: lissy93/dashy
+    container_name: dashy
+    volumes:
+      - ./config/dashy.yml:/app/user-data/conf.yml
+    networks:
+      - nginx
+networks:
+  nginx:
+    name: nginx
+    external: true

@@ -1,0 +1,7 @@
+appConfig:
+  language: en
+  layout: auto
+  iconSize: medium
+pageInfo:
+  title: Deployments
+sections: []
