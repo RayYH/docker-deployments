@@ -50,7 +50,7 @@ Now, start the service and reload nginx service:
 
 ```shell
 docker compose -f services/minio-compose.yml up -d
-docker exec -it nginx nginx -s reload
+docker restart nginx
 ```
 
 Visit [https://minio.local.test](https://minio.local.test) to see the Minio welcome page.
