@@ -1,5 +1,6 @@
 services:
   jenkins:
+    # dev/secret123
     image: jenkins/jenkins:lts-jdk17
     container_name: jenkins
     volumes:
