@@ -1,0 +1,27 @@
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: secret123
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - nginx
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: dev
+      ME_CONFIG_MONGODB_ADMINPASSWORD: secret123
+      ME_CONFIG_MONGODB_URL: mongodb://dev:secret123@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    networks:
+      - nginx
+networks:
+  nginx:
+    name: nginx
+    external: true
+volumes:
+  mongo-data:
