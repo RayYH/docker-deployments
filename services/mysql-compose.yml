@@ -3,7 +3,7 @@ services:
     image: mysql:8
     restart: always
     volumes:
-      - mysql-data:/var/lib/mysql
+      - global-mysql-data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d
       - ./mysql/conf:/etc/mysql/conf.d
     environment:
@@ -20,4 +20,4 @@ networks:
   nginx:
     external: true
 volumes:
-  mysql-data:
+  global-mysql-data:
