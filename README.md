@@ -1,6 +1,7 @@
-# Nginx Samples
+# Deployments 101
 
-This repository contains a collection of sample configurations for the Nginx web server.
+This repository contains a collection of sample configurations for apps and services, you can quickly setup services on
+your local machine. **Only works on MacOS**.
 
 ## Generate Certs
 
