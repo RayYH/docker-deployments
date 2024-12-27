@@ -41,14 +41,6 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 
 ## Starting Other Services
 
-First, you need to uncomment the line for configuring proxy inside `nginx/nginx.conf`:
-
-```nginx
-# include /etc/nginx/conf.d/minio.local.test.conf;
-```
-
-Now, start the service and reload nginx service:
-
 ```shell
 docker compose -f services/minio-compose.yml up -d
 docker restart nginx
