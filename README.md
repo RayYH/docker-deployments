@@ -1,7 +1,7 @@
-# Deployments 101
+# Docker Deployments
 
 This repository contains a collection of sample configurations for apps and services, you can quickly setup services on
-your local machine. **Only works on MacOS**.
+your local machine. **Only works on MacOS for now, but can be easily adapted to other Unix-based systems.**
 
 ## Generate Certs
 
