@@ -7,16 +7,18 @@ services:
       - jenkins_home:/var/jenkins_home
     networks:
       - nginx
-  agent1:
+  jenkins-agent1:
     image: jenkins/agent
-    container_name: agent1
+    container_name: jenkins-agent1
     init: true
     environment:
       - JENKINS_URL=http://jenkins:8080
+    # create agent1 on jenkins management site, the remote directory should fill with /home/jenkins/agent
     volumes:
       - agent1-workdir:/home/jenkins/agent
+      - ./jenkins-secret:/home/jenkins/jenkins-secret
     # secret will show after you create agent in jenkins control panel
-    command: java -jar /usr/share/jenkins/agent.jar -url http://jenkins:8080/ -secret 748fadd29dd4b366c6c1ed9cddee0d3047427793ce21b21167f1f1faaaafb8d1 -name agent1 -workdir /home/jenkins/agent
+    command: java -jar /usr/share/jenkins/agent.jar -url http://jenkins:8080/ -secret @/home/jenkins/jenkins-secret -name agent1 -webSocket -workDir /home/jenkins/agent
     networks:
       - nginx
 networks:
