@@ -43,6 +43,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 
 ```shell
 docker compose -f services/minio-compose.yml up -d
+cd nginx/sites-enabled && ln -s ../conf.d/minio.local.test.conf minio.local.test.conf
 docker restart nginx
 ```
 
