@@ -1,16 +1,4 @@
 services:
-  mongo:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: dev
-      MONGO_INITDB_ROOT_PASSWORD: secret123
-    ports:
-      - 27017:27017/tcp
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - nginx
   mongo-express:
     image: mongo-express
     restart: always

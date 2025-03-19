@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: secret123
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - nginx
+networks:
+  nginx:
+    name: nginx
+    external: true
+volumes:
+  mongo-data:

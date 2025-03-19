@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+
+current_dir = os.path.dirname(os.path.realpath(__file__))
+
+http_services = ['gitea', 'minio', 'dashy', 'jenkins', 'mongo-express']
+stream_services = ['mysql', 'mongo']
+valid_services = ['nginx', *http_services, *stream_services]
+
+
+def run_bash_command(command):
+    process = subprocess.Popen(
+        command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    stdout, stderr = process.communicate()
+
+    if process.returncode != 0:
+        raise Exception(
+            f'Error running command: {command}\n{stderr.decode("utf-8")}')
+
+    return stdout.decode('utf-8'), stderr.decode('utf-8')
+
+
+def clean_soft_links(stream=False):
+    if stream:
+        nginx_conf_dir = os.path.join(current_dir, 'nginx', 'stream-enabled')
+    else:
+        nginx_conf_dir = os.path.join(current_dir, 'nginx', 'sites-enabled')
+    nginx_conf_files = os.listdir(nginx_conf_dir)
+    # Remove all soft links
+    for conf_file in nginx_conf_files:
+        conf_file_path = os.path.join(nginx_conf_dir, conf_file)
+        if os.path.islink(conf_file_path):
+            os.unlink(conf_file)
+
+
+def create_relative_soft_link(filename: str, stream=False):
+    nginx_conf_dir = os.path.join(current_dir, 'nginx', 'conf.d')
+    if stream:
+        nginx_conf_dir = os.path.join(current_dir, 'nginx', 'stream.conf.d')
+    nginx_conf_file = os.path.join(nginx_conf_dir, filename)
+    nginx_conf_enabled = os.path.join(
+        current_dir, 'nginx', 'sites-enabled', filename)
+    if stream:
+        nginx_conf_enabled = os.path.join(
+            current_dir, 'nginx', 'stream-enabled', filename)
+
+    if not os.path.exists(nginx_conf_file):
+        raise Exception(f'File {nginx_conf_file} does not exist')
+
+    if os.path.exists(nginx_conf_enabled):
+        os.unlink(nginx_conf_enabled)
+    # cd nginx/sites-enabled && ln -s ../conf.d/minio.local.test.conf minio.local.test.conf
+    if stream:
+        run_bash_command(
+            f'cd {os.path.join(current_dir, "nginx", "stream-enabled")} && ln -s ../stream.conf.d/{filename} {filename}')
+    else:
+        run_bash_command(
+            f'cd {os.path.join(current_dir, "nginx", "sites-enabled")} && ln -s ../conf.d/{filename} {filename}')
+
+
+def remove_relative_soft_link(filename: str, stream=False):
+    nginx_conf_enabled = os.path.join(
+        current_dir, 'nginx', 'sites-enabled', filename)
+    if stream:
+        nginx_conf_enabled = os.path.join(
+            current_dir, 'nginx', 'stream-enabled', filename)
+    if os.path.exists(nginx_conf_enabled):
+        os.unlink(nginx_conf_enabled)
+
+
+def service_restart(service_name: str):
+    # switch working directory to the current directory
+    os.chdir(current_dir)
+    if service_name == 'nginx':
+        run_bash_command('docker compose restart nginx')
+    elif service_name in http_services or service_name in stream_services:
+        run_bash_command(
+            f'docker compose -f services/{service_name}/docker-compose.yml restart')
+        service_restart('nginx')
+    else:
+        raise Exception(f'Invalid service name: {service_name}')
+
+
+def service_up(service_name: str):
+    # switch working directory to the current directory
+    os.chdir(current_dir)
+    if service_name == 'nginx':
+        run_bash_command('docker compose up -d')
+    elif service_name in http_services or service_name in stream_services:
+        create_relative_soft_link(f'{service_name}.local.test.conf', service_name in stream_services)
+        run_bash_command(
+            f'docker compose -f services/{service_name}/docker-compose.yml up -d')
+        service_restart('nginx')
+    else:
+        raise Exception(f'Invalid service name: {service_name}')
+
+
+def service_down(service_name: str):
+    # switch working directory to the current directory
+    os.chdir(current_dir)
+    if service_name == 'nginx':
+        run_bash_command('docker compose down')
+    elif service_name in http_services or service_name in stream_services:
+        remove_relative_soft_link(f'{service_name}.local.test.conf')
+        run_bash_command(
+            f'docker compose -f services/{service_name}/docker-compose.yml down')
+        service_restart('nginx')
+    else:
+        raise Exception(f'Invalid service name: {service_name}')
+
+
+def main():
+    args = sys.argv[1:]
+    if len(args) < 2:
+        print('Usage: ./service <up|down|restart> <service_name>')
+        sys.exit(1)
+
+    action = args[0]
+    service_name = args[1]
+
+    if service_name not in valid_services:
+        print(f'Invalid service name. Valid services: {valid_services}')
+        sys.exit(1)
+
+    if action == 'up':
+        service_up(service_name)
+    elif action == 'down':
+        service_down(service_name)
+    elif action == 'restart':
+        service_restart(service_name)
+    else:
+        print('Invalid action. Use up or down')
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

@@ -33,18 +33,22 @@ $ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
 
 ```shell
 $ docker network create nginx
-$ docker compose -f services/dashy-compose.yml up -d
-$ docker compose -f docker-compose.yml up -d
+$ ./service nginx start
 ```
 
 Visit [https://local.test](https://local.test) to see the Dashboard.
 
+## Supported Services
+
+- Jenkins
+- Gitea
+- Minio
+
 ## Starting Other Services
 
 ```shell
-docker compose -f services/minio-compose.yml up -d
-cd nginx/sites-enabled && ln -s ../conf.d/minio.local.test.conf minio.local.test.conf
-docker restart nginx
+# service name should be lowercase
+$ ./service [service_name] start
 ```
 
-Visit [https://minio.local.test](https://minio.local.test) to see the Minio welcome page.
+Visit [https://[service_name].local.test](https://local.test) to see the service page if it's available.

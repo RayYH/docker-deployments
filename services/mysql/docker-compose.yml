@@ -4,8 +4,8 @@ services:
     restart: always
     volumes:
       - global-mysql-data:/var/lib/mysql
-      - ./mysql/init:/docker-entrypoint-initdb.d
-      - ./mysql/conf:/etc/mysql/conf.d
+      - ./init:/docker-entrypoint-initdb.d
+      - ./conf:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: dev

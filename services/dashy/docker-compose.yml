@@ -3,7 +3,7 @@ services:
     image: lissy93/dashy
     container_name: dashy
     volumes:
-      - ./dashy/dashy.yml:/app/user-data/conf.yml
+      - ./dashy.yml:/app/user-data/conf.yml
     networks:
       - nginx
 networks:
