@@ -43,6 +43,8 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - Jenkins
 - Gitea
 - Minio
+- MySQL
+- Mongo
 
 ## Starting Other Services
 
