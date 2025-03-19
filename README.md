@@ -3,6 +3,10 @@
 This repository contains a collection of sample configurations for apps and services, you can quickly setup services on
 your local machine. **Only works on MacOS for now, but can be easily adapted to other Unix-based systems.**
 
+## Prerequisites
+
+Docker runtime, I suggest using [OrbStack](https://docs.orbstack.dev) to install Docker and other tools if you don't have them installed.
+
 ## Generate Certs
 
 Use the [mkcert](https://github.com/FiloSottile/mkcert) to generate the certificates.
