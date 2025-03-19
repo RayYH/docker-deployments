@@ -50,7 +50,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - MySQL
 - Mongo
 
-## Starting Other Services
+## Starting Services
 
 ```shell
 # service name should be lowercase
