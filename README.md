@@ -33,7 +33,7 @@ $ sudo mkdir -v /etc/resolver
 $ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
 ```
 
-## Start Dashboard
+## Start Gateway 
 
 ```shell
 $ docker network create nginx
