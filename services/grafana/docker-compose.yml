@@ -1,0 +1,33 @@
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    networks:
+      - nginx
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_USERS_AUTO_ASSIGN_ORG=true
+      - GF_USERS_AUTO_ASSIGN_ORG_ROLE=Viewer
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.
+      - GF_AUTH_ANONYMOUS_USER_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=true
+      - GF_AUTH_BASIC_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_BASIC_DEFAULT_ROLE=Viewer
+      - GF_AUTH_BASIC_DEFAULT_ORG_ROLE=Viewer
+      - GF_AUTH_BASIC_DEFAULT_ORG_NAME=Main Org.
+      - GF_AUTH_BASIC_DEFAULT_USER=admin
+      - GF_AUTH_BASIC_DEFAULT_PASSWORD=admin
+      - GF_AUTH_BASIC_DEFAULT_EMAIL=admin@localhost
+    restart: always
+networks:
+  nginx:
+    name: nginx
+    external: true
+volumes:
+  grafana_data:
