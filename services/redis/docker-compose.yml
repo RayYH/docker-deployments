@@ -1,0 +1,15 @@
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - nginx
+networks:
+  nginx:
+    external: true
+volumes:
+  redis-data:
