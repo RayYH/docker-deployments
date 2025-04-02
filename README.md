@@ -1,6 +1,6 @@
 # Docker Deployments
 
-> [!CAUTION] 
+> [!CAUTION]
 > DO NOT USE THIS ON PRODUCTION ENVIRONMENTS. THIS IS ONLY FOR DEVELOPMENT PURPOSES.
 
 This repository contains a collection of sample configurations for apps and services, you can quickly setup services on
@@ -12,7 +12,7 @@ Docker runtime, I suggest using [OrbStack](https://docs.orbstack.dev) to install
 
 ## Generate Certs
 
-Use the [mkcert](https://github.com/FiloSottile/mkcert) to generate the certificates.
+Use the [mkcert](https://github.com/FiloSottile/mkcert) tool to generate the certificates.
 
 ```bash
 # Install mkcert
@@ -36,7 +36,7 @@ $ sudo mkdir -v /etc/resolver
 $ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
 ```
 
-## Start Gateway 
+## Start Gateway
 
 ```shell
 $ docker network create nginx
@@ -52,6 +52,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - Minio
 - MySQL
 - Mongo
+- Redis
 
 ## Starting Services
 
