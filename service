@@ -6,8 +6,8 @@ import sys
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
-http_services = ['gitea', 'minio', 'dashy', 'jenkins', 'mongo-express', 'grafana']
-stream_services = ['mysql', 'mongo', 'redis']
+http_services = ['gitea', 'minio', 'dashy', 'jenkins', 'mongo-express', 'grafana', 'redis-insight']
+stream_services = ['mysql', 'mongo', 'redis', 'redis-stack']
 valid_services = ['nginx', *http_services, *stream_services]
 
 
@@ -91,8 +91,10 @@ def service_up(service_name: str):
         run_bash_command('docker compose up -d')
     elif service_name in http_services or service_name in stream_services:
         create_relative_soft_link(f'{service_name}.local.test.conf', service_name in stream_services)
-        run_bash_command(
-            f'docker compose -f services/{service_name}/docker-compose.yml up -d')
+        # if docker-compose.yml file exists
+        if os.path.exists(f'services/{service_name}/docker-compose.yml'):
+            run_bash_command(
+                f'docker compose -f services/{service_name}/docker-compose.yml up -d')
         service_restart('nginx')
     else:
         raise Exception(f'Invalid service name: {service_name}')
@@ -105,8 +107,9 @@ def service_down(service_name: str):
         run_bash_command('docker compose down')
     elif service_name in http_services or service_name in stream_services:
         remove_relative_soft_link(f'{service_name}.local.test.conf')
-        run_bash_command(
-            f'docker compose -f services/{service_name}/docker-compose.yml down')
+        if os.path.exists(f'services/{service_name}/docker-compose.yml'):
+            run_bash_command(
+                f'docker compose -f services/{service_name}/docker-compose.yml down')
         service_restart('nginx')
     else:
         raise Exception(f'Invalid service name: {service_name}')

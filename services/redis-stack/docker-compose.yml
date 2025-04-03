@@ -1,0 +1,13 @@
+services:
+  redis-stack:
+    image: redis/redis-stack:latest
+    restart: always
+    volumes:
+      - redis-stack-data:/data
+    networks:
+      - nginx
+networks:
+  nginx:
+    external: true
+volumes:
+  redis-stack-data:
