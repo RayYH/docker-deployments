@@ -54,6 +54,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - Mongo
 - Redis (RedisInsight)
 - Beanstalk
+- Mailpit
 - Grafanag
 - Loki
 
