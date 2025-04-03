@@ -1,15 +1,15 @@
 services:
-  redis-stack:
-    image: redis/redis-stack:latest
+  beanstalk:
+    image: rayyounghong/beanstalkd:latest
     restart: always
     volumes:
-      - redis-stack-data:/data
+      - beanstalk-data:/data
     ports:
-      - "6380:6379"
+      - 11300:11300/tcp
     networks:
       - nginx
 networks:
   nginx:
     external: true
 volumes:
-  redis-stack-data:
+  beanstalk-data:

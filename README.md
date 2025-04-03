@@ -52,7 +52,8 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - Minio
 - MySQL
 - Mongo
-- Redis
+- Redis (RedisInsight)
+- Beanstalk
 
 ## Starting Services
 
