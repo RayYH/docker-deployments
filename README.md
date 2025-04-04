@@ -55,7 +55,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - Redis (RedisInsight)
 - Beanstalk
 - Mailpit
-- Grafanag
+- Grafana
 - Loki
 
 ## Starting Services
