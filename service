@@ -6,7 +6,7 @@ import sys
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
-http_services = ['gitea', 'minio', 'dashy', 'jenkins', 'mongo-express', 'grafana', 'redis-insight', 'loki', 'mailpit']
+http_services = ['gitea', 'minio', 'dashy', 'jenkins', 'mongo-express', 'grafana', 'redis-insight', 'loki', 'mailpit', 'rabbitmq']
 stream_services = ['mysql', 'mongo', 'redis', 'redis-stack', 'beanstalk']
 valid_services = ['nginx', *http_services, *stream_services]
 

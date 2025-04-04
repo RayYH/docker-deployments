@@ -57,6 +57,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 - Mailpit
 - Grafana
 - Loki
+- RabbitMQ
 
 ## Starting Services
 
