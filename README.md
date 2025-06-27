@@ -40,7 +40,7 @@ $ sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
 
 ```shell
 $ docker network create nginx
-$ ./service nginx start
+$ ./service up nginx
 ```
 
 Visit [https://local.test](https://local.test) to see the Dashboard.
@@ -63,7 +63,7 @@ Visit [https://local.test](https://local.test) to see the Dashboard.
 
 ```shell
 # service name should be lowercase
-$ ./service [service_name] start
+$ ./service up [service_name] 
 ```
 
 Visit [https://[service_name].local.test](https://local.test) to see the service page if it's available.
