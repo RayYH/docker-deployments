@@ -19,6 +19,7 @@ Use the [mkcert](https://github.com/FiloSottile/mkcert) tool to generate the cer
 $ mkcert -install
 
 # Generate the certificates
+$ mkdir -p certs/local.test
 $ mkcert -cert-file certs/local.test/cert.pem -key-file certs/local.test/key.pem local.test "*.local.test" local.test localhost 127.0.0.1 ::1
 ```
 
