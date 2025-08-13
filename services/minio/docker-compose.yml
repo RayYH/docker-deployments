@@ -1,20 +1,20 @@
 services:
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
     container_name: minio
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ACCESS_KEY: minio123
-      MINIO_SECRET_KEY: minio123
+      MINIO_ROOT_USER: minio123
+      MINIO_ROOT_PASSWORD: minio123
       MINIO_BROWSER_REDIRECT_URL: https://minio.local.test/minio/ui
     volumes:
       - ns-minio-data:/data
+    ports:
+      - 9000:9000/tcp
     networks:
       - nginx
-
 volumes:
   ns-minio-data:
-
 networks:
   nginx:
     external: true
